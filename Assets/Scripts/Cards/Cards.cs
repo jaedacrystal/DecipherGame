@@ -19,6 +19,11 @@ public class Cards : ScriptableObject
 
     public void ApplyEffect(GameObject player, GameObject opponent)
     {
+        Health playerHealth = player.GetComponent<Health>();
+        PlayerStats playerStats = player.GetComponent<PlayerStats>();
+        Health opponentHealth = opponent.GetComponent<Health>();
+        PlayerStats opponentStats = opponent.GetComponent<PlayerStats>();
+
         GameObject targetObject = target == TargetType.Player ? player : opponent;
         Health targetHealth = targetObject.GetComponent<Health>();
         PlayerStats targetStats = targetObject.GetComponent<PlayerStats>();
@@ -27,37 +32,48 @@ public class Cards : ScriptableObject
         {
             case EffectType.Attack:
                 targetHealth.TakeDamage(effectValue);
+                Debug.Log(targetObject.name + " took " + effectValue + " damage!");
                 break;
+
             case EffectType.Defense:
                 targetStats.IncreaseDefense(effectValue);
                 break;
+
             case EffectType.Heal:
                 targetHealth.Heal(effectValue);
                 break;
+
             case EffectType.Draw:
                 CardManager cardManager = FindObjectOfType<CardManager>();
                 cardManager.DrawMultipleCards(effectValue);
                 break;
+
             case EffectType.ShieldAndRetaliate:
-                targetStats.StartCoroutine(ApplyShieldAndRetaliate(targetStats, targetHealth));
+                TurnManager turnManager = TurnManager.Instance;
+                turnManager.StartCoroutine(ApplyShieldAndRetaliate(playerHealth, opponentStats, effectValue));
                 break;
+
             default:
                 break;
         }
     }
 
-    private IEnumerator ApplyShieldAndRetaliate(PlayerStats targetStats, Health targetHealth)
+    private IEnumerator ApplyShieldAndRetaliate(Health playerHealth, PlayerStats opponentStats, int effectValue)
     {
-        targetStats.isInvulnerable = true;
-        Debug.Log(targetStats.name + " is invulnerable this turn!");
+        TurnManager turnManager = TurnManager.Instance;
 
-        yield return new WaitForSeconds(1.5f);
+        playerHealth.TakeDamage(effectValue);
+        Debug.Log(playerHealth.name + " took " + effectValue + " immediate damage!");
 
-        targetStats.isInvulnerable = false;
-        Debug.Log(targetStats.name + " is no longer invulnerable.");
+        yield return new WaitUntil(() => !turnManager.isPlayerTurn);
 
-        targetHealth.TakeDamage(5);
-        Debug.Log(targetHealth.name + " took 5 retaliate damage!");
+        opponentStats.isInvulnerable = true;
+        Debug.Log(opponentStats.name + " is now invulnerable!");
+
+        yield return new WaitUntil(() => turnManager.isPlayerTurn);
+
+        opponentStats.isInvulnerable = false;
+        Debug.Log(opponentStats.name + " is no longer invulnerable.");
     }
 }
 

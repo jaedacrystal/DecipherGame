@@ -4307,14 +4307,6 @@ MonoBehaviour:
     - isPlayer: 0
       playerName: Enemy
       dialogue: You'll have to defeat me first before I can answer your questions.
-  - title: Enemy 1
-    dialogues:
-    - isPlayer: 0
-      playerName: 
-      dialogue: You actually defeated me...?
-    - isPlayer: 1
-      playerName: 
-      dialogue: I sure did, now tell me where I am and how I can leave.
 --- !u!1 &1070276421
 GameObject:
   m_ObjectHideFlags: 0
@@ -4425,6 +4417,30 @@ PrefabInstance:
       propertyPath: moveSpeed
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5302353913882688442, guid: 4725948375e69ee41a5c5f1a2c940248, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -570244133, guid: 7ffc504a37083824e837f1e589190a01, type: 3}
+    - target: {fileID: 5302353913882688442, guid: 4725948375e69ee41a5c5f1a2c940248, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6671147433648735971, guid: 4725948375e69ee41a5c5f1a2c940248, type: 3}
+      propertyPath: m_ActionEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8406938579341507665, guid: 4725948375e69ee41a5c5f1a2c940248, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8406938579341507665, guid: 4725948375e69ee41a5c5f1a2c940248, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8406938579341507665, guid: 4725948375e69ee41a5c5f1a2c940248, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8406938579341507665, guid: 4725948375e69ee41a5c5f1a2c940248, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -4468,15 +4484,23 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 1960412545635928663, guid: 4725948375e69ee41a5c5f1a2c940248, type: 3}
     - {fileID: 1170953477037447842, guid: 4725948375e69ee41a5c5f1a2c940248, type: 3}
+    - {fileID: 6671147433648735971, guid: 4725948375e69ee41a5c5f1a2c940248, type: 3}
+    - {fileID: 4255367001523079529, guid: 4725948375e69ee41a5c5f1a2c940248, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1772447832899665877, guid: 4725948375e69ee41a5c5f1a2c940248, type: 3}
+      insertIndex: 2
+      addedObject: {fileID: 1113781142}
     - targetCorrespondingSourceObject: {fileID: 1772447832899665877, guid: 4725948375e69ee41a5c5f1a2c940248, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1113781136}
     - targetCorrespondingSourceObject: {fileID: 1772447832899665877, guid: 4725948375e69ee41a5c5f1a2c940248, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1113781137}
+    - targetCorrespondingSourceObject: {fileID: 1772447832899665877, guid: 4725948375e69ee41a5c5f1a2c940248, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1113781138}
   m_SourcePrefab: {fileID: 100100000, guid: 4725948375e69ee41a5c5f1a2c940248, type: 3}
 --- !u!1 &1113781135 stripped
 GameObject:
@@ -4530,12 +4554,77 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e4c6fea617d9ef42a339e46d2ab5cee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultDialogueCounter: 1
-  alternateDialogueCounter: 2
+  dialogueCounter: 1
   interact: {fileID: 440662699}
   cardClass: {fileID: 2106991996}
   dialogue: {fileID: 0}
   start: {fileID: 1044203416}
+--- !u!95 &1113781138
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1113781135}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1b56ec9b457a8764eb483695197f9445, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!61 &1113781142
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1113781135}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.020699263, y: 0.18629241}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1.4375}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.2225938, y: 1.4935803}
+  m_EdgeRadius: 0
 --- !u!1001 &1173294177
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4550,7 +4639,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1960412545635928663, guid: 4725948375e69ee41a5c5f1a2c940248, type: 3}
       propertyPath: moveSpeed
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8406938579341507665, guid: 4725948375e69ee41a5c5f1a2c940248, type: 3}
       propertyPath: m_LocalPosition.x

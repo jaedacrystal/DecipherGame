@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   artwork: {fileID: 1988983389, guid: 85c910f6d5d42d645ba521cac7445a42, type: 3}
   cardName: Two Factor Authentication
-  desc: blocks all incoming damage for a turn and inflicts 5 damage after
+  desc: blocks all incoming damage for a turn and inflicts 5 damage after usage
   bandwidth: 3
   effectValue: 5
   classType: 1

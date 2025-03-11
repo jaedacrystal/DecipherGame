@@ -42,6 +42,12 @@ public class Health : MonoBehaviour
     {
         PlayerStats stats = GetComponent<PlayerStats>();
 
+        if (stats != null && stats.isInvulnerable)
+        {
+            Debug.Log(stats.name + " blocked the damage!");
+            return;
+        }
+
         int previousHealth = currentHealth;
         currentHealth -= damage;
         if (currentHealth < 0) currentHealth = 0;
@@ -52,13 +58,6 @@ public class Health : MonoBehaviour
             healthBarText.text = $"{x}/{maxHealth}";
         }, currentHealth, 0.5f).SetEase(Ease.OutQuad);
 
-        if (stats != null && stats.isInvulnerable)
-        {
-            Debug.Log(stats.name + " blocked the damage!");
-            return;
-        }
-
-        currentHealth -= damage;
         if (currentHealth <= 0)
         {
             Die();
@@ -78,17 +77,6 @@ public class Health : MonoBehaviour
         }, currentHealth, 0.5f).SetEase(Ease.OutQuad);
     }
 
-    private IEnumerator ApplyShieldAndRetaliate(PlayerStats targetStats, Health targetHealth)
-    {
-        targetStats.isInvulnerable = true;
-
-        yield return new WaitForSeconds(1.5f);
-
-        targetStats.isInvulnerable = false;
-
-        targetHealth.TakeDamage(5);
-    }
-
     private void Die()
     {
         playerCheck = isPlayer;
@@ -104,13 +92,5 @@ public class Health : MonoBehaviour
             gameObject.SetActive(false);
             healthBar.gameObject.SetActive(false);
         });
-
-        //if (!isPlayer)
-        //{
-        //    PlayerPrefs.SetInt("NPC_Dialogue_Index", 2);
-        //    PlayerPrefs.Save();
-
-        //    start.LoadPreviousScene();
-        //}
     }
 }
