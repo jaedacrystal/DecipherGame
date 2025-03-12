@@ -11,6 +11,7 @@ public class TurnManager : MonoBehaviour
 
     public TextMeshProUGUI turnText;
     public TextMeshProUGUI opponentCardText;
+    public CardManager cardManager;
 
     private void Awake()
     {
@@ -54,6 +55,9 @@ public class TurnManager : MonoBehaviour
     {
         isPlayerTurn = true;
         playerStats.RestoreBandwidth();
+
+        CardManager cardManager = FindObjectOfType<CardManager>();
+        cardManager.DrawMultipleCards(4);
 
         UpdateTurnText();
     }

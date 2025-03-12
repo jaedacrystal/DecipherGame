@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Email : MonoBehaviour
 {
-    [SerializeField] public GameObject email;
-    [SerializeField] public GameObject notif;
+    public GameObject email;
+    public GameObject notif;
 
     void Start()
     {

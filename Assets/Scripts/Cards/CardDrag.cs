@@ -27,7 +27,6 @@ public class CardDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         playArea = GameObject.Find("PlayArea").GetComponent<RectTransform>();
         discard = GetComponent<Discard>();
         graveyard = GameObject.Find("Graveyard");
-
         errorText = GameObject.Find("BandwidthErrorText").GetComponent<TextMeshProUGUI>();
     }
 

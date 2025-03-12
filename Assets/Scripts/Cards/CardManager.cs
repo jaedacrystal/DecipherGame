@@ -28,7 +28,6 @@ public class CardManager : MonoBehaviour
     private void Start()
     {
         string savedClass = PlayerPrefs.GetString("ChosenClass", "None");
-
         if (savedClass == "None") return;
 
         if (Enum.TryParse(savedClass, out ClassType chosenClass))
@@ -36,6 +35,7 @@ public class CardManager : MonoBehaviour
             InitializeDeck(chosenClass);
         }
         UpdateDeckCounter();
+        DrawMultipleCards(maxHandSize);
     }
 
     private void Update()

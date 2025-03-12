@@ -3,6 +3,7 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Cinemachine;
 
 public class Health : MonoBehaviour
 {
@@ -26,6 +27,7 @@ public class Health : MonoBehaviour
     public LevelLoader start;
 
     private GameObject player;
+    private CinemachineImpulseSource impulseSource;
 
     private void Start()
     {
@@ -35,12 +37,16 @@ public class Health : MonoBehaviour
         healthBar.gameObject.SetActive(true);
 
         player = GameObject.FindGameObjectWithTag("Player");
+        impulseSource = GetComponent<CinemachineImpulseSource>();
     }
 
 
     public void TakeDamage(int damage)
     {
         PlayerStats stats = GetComponent<PlayerStats>();
+
+        CameraShakeManager.instance.CameraShake(impulseSource);
+        SoundFX.Play("Hit");
 
         if (stats != null && stats.isInvulnerable)
         {
