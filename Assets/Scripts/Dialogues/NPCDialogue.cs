@@ -25,7 +25,7 @@ public class NPCDialogue : MonoBehaviour
         {
             interact.gameObject.SetActive(false);
             dialogue.listCounter = dialogueCounter;
-            dialogue.showDialogue();
+            dialogue.ShowDialogue();
         }
     }
 

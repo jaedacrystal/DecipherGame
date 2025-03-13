@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -16,11 +15,14 @@ public class DialogueSystem : MonoBehaviour
     public TextMeshProUGUI dialogue;
     public TextReveal textReveal;
 
+    public string playerTypingSound;
 
     [Serializable]
     public class DialogueList
     {
         public string title;
+        public bool useSingleSoundForList;
+        public string singleTypewriterSound;
         public List<Dialogue> dialogues;
     }
 
@@ -33,6 +35,7 @@ public class DialogueSystem : MonoBehaviour
         public string playerName;
         [TextArea(3, 3)]
         public string dialogue;
+        public string typewriterSoundName;
     }
 
     private void Start()
@@ -50,47 +53,54 @@ public class DialogueSystem : MonoBehaviour
             player.text = dialogueList[listCounter].dialogues[counter].playerName;
         }
 
-        Invoke("showDialogue", 1);
+        Invoke("ShowDialogue", 1);
         dialogue.text = "";
     }
 
     private void Update()
     {
-        if (canTalk)
+        if (canTalk && Input.GetKeyDown(KeyCode.F))
         {
-            if (Input.GetKeyDown(KeyCode.F))
-            {
-                dialogueBG.SetActive(true);
-            }
+            dialogueBG.SetActive(true);
         }
 
-        if (Input.GetKeyDown("space") || Input.GetMouseButtonDown(0))
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
         {
-            nextDialogue();
+            if (!textReveal.IsFinished)
+            {
+                textReveal.SkipReveal(dialogueList[listCounter].dialogues[counter].dialogue);
+            }
+            else
+            {
+                NextDialogue();
+            }
         }
     }
 
-    public void hideDialogue()
+    public void HideDialogue()
     {
         dialogueBG.SetActive(false);
     }
 
-    public void showDialogue()
+    public void ShowDialogue()
     {
         dialogueBG.SetActive(true);
         counter = 0;
+
+        string soundToPlay = GetTypingSound();
+        textReveal.SetTypingSound(soundToPlay);
         textReveal.StartReveal(dialogueList[listCounter].dialogues[counter].dialogue);
     }
 
-    public void nextDialogue()
+    public void NextDialogue()
     {
-        if (dialogueList[listCounter].dialogues.Count - 1 > counter)
+        if (counter < dialogueList[listCounter].dialogues.Count - 1)
         {
             counter++;
 
             if (listCounter == 0 && counter == 1)
             {
-                Invoke("hideDialogue", 5);
+                Invoke("HideDialogue", 5);
             }
 
             playerCheck = dialogueList[listCounter].dialogues[counter].isPlayer;
@@ -104,6 +114,8 @@ public class DialogueSystem : MonoBehaviour
                 player.text = dialogueList[listCounter].dialogues[counter].playerName;
             }
 
+            string soundToPlay = GetTypingSound();
+            textReveal.SetTypingSound(soundToPlay);
             textReveal.StartReveal(dialogueList[listCounter].dialogues[counter].dialogue);
         }
         else
@@ -114,5 +126,22 @@ public class DialogueSystem : MonoBehaviour
 
             FindObjectOfType<NPCDialogue>().CheckDialogueEnd();
         }
+    }
+
+    private string GetTypingSound()
+    {
+        var currentDialogue = dialogueList[listCounter].dialogues[counter];
+
+        if (currentDialogue.isPlayer)
+        {
+            return playerTypingSound;
+        }
+
+        if (dialogueList[listCounter].useSingleSoundForList)
+        {
+            return dialogueList[listCounter].singleTypewriterSound;
+        }
+
+        return currentDialogue.typewriterSoundName;
     }
 }

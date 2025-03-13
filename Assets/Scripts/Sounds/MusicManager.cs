@@ -58,7 +58,7 @@ public class MusicManager : MonoBehaviour
 
             audioSource.volume = 0;
             audioSource.Play();
-            StartCoroutine(FadeInVolume(0.3f, 2f));
+            StartCoroutine(FadeInVolume(0.2f, 2f));
         }
     }
 

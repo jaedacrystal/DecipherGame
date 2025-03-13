@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,18 +9,27 @@ public class SoundFX : MonoBehaviour
     private static AudioSource audioSource;
     private static AudioSource randomPitchAudioSource;
     private static SoundFXLibrary soundEffectLibrary;
+
     [SerializeField] private Slider slider;
+
+    public static float minPitch = 0.9f;
+    public static float maxPitch = 1.2f;
 
     private void Awake()
     {
         if (instance == null)
         {
+            instance = this;
+
             AudioSource[] audioSources = GetComponents<AudioSource>();
-            audioSource = audioSources[0];
+            audioSource = audioSources[1];
             randomPitchAudioSource = audioSources[0];
-            soundEffectLibrary = GetComponent<SoundFXLibrary>();
+
+            if (soundEffectLibrary == null)
+            {
+                soundEffectLibrary = FindObjectOfType<SoundFXLibrary>();
+            }
         }
-        
     }
 
     private void Start()
@@ -33,17 +41,17 @@ public class SoundFX : MonoBehaviour
     {
         AudioClip audioClip = soundEffectLibrary.GetRandomClip(soundName);
 
-        if(audioClip != null)
+        if (audioClip != null)
         {
-            if(randomPitch)
+            if (randomPitch)
             {
-                randomPitchAudioSource.pitch = Random.Range(1f, 1.5f);
+                randomPitchAudioSource.pitch = Random.Range(minPitch, maxPitch);
                 randomPitchAudioSource.PlayOneShot(audioClip);
-            } else
+            }
+            else
             {
                 audioSource.PlayOneShot(audioClip);
             }
-                
         }
     }
 

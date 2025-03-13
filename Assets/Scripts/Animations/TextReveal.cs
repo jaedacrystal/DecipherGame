@@ -7,27 +7,16 @@ public class TextReveal : MonoBehaviour
     public TextMeshProUGUI textComponent;
     public float revealSpeed;
     public float punctuationPause;
-    public AudioClip typewriterSound;
-    private AudioSource audioSource;
+
+    private string soundName;
     private Coroutine revealCoroutine;
+    private bool isRevealing;
 
-    private void Start()
+    public bool IsFinished => !isRevealing;
+
+    public void SetTypingSound(string sound)
     {
-        if (textComponent == null)
-        {
-            textComponent = GetComponent<TextMeshProUGUI>();
-            if (textComponent == null)
-            {
-                Debug.LogError("TextMeshProUGUI component is missing!");
-            }
-        }
-
-        audioSource = GetComponent<AudioSource>();
-        if (audioSource == null)
-        {
-            audioSource = gameObject.AddComponent<AudioSource>();
-        }
-        audioSource.playOnAwake = false;
+        soundName = sound;
     }
 
     public void StartReveal(string text)
@@ -35,28 +24,28 @@ public class TextReveal : MonoBehaviour
         if (revealCoroutine != null)
         {
             StopCoroutine(revealCoroutine);
-            if (audioSource != null) audioSource.Stop();
         }
 
         textComponent.text = "";
+        isRevealing = true;
         revealCoroutine = StartCoroutine(RevealText(text));
+    }
+
+    public void SkipReveal(string fullText)
+    {
+        if (isRevealing)
+        {
+            StopCoroutine(revealCoroutine);
+            textComponent.text = fullText;
+            isRevealing = false;
+        }
     }
 
     private IEnumerator RevealText(string fullText)
     {
-        if (audioSource != null) audioSource.Stop();
-
         for (int i = 0; i <= fullText.Length; i++)
         {
-            if (textComponent != null)
-            {
-                textComponent.text = fullText.Substring(0, i);
-            }
-            else
-            {
-                Debug.LogError("textComponent is NULL during text reveal!");
-                yield break;
-            }
+            textComponent.text = fullText.Substring(0, i);
 
             if (i > 0)
             {
@@ -73,17 +62,14 @@ public class TextReveal : MonoBehaviour
             }
         }
 
-        if (audioSource != null) audioSource.Stop();
+        isRevealing = false;
     }
 
     private void PlayTypingSound()
     {
-        if (typewriterSound != null && audioSource != null)
+        if (!string.IsNullOrEmpty(soundName))
         {
-            if (!audioSource.isPlaying)
-            {
-                audioSource.PlayOneShot(typewriterSound);
-            }
+            SoundFX.Play(soundName, true);
         }
     }
 

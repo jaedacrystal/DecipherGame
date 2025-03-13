@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Cinemachine;
+using UnityEditor.Search;
 
 public class Health : MonoBehaviour
 {
@@ -22,15 +23,24 @@ public class Health : MonoBehaviour
 
     private string playerName;
     private bool playerCheck;
-
     public bool isPlayer = false;
-    public LevelLoader start;
 
+    public LevelLoader start;
     private GameObject player;
+
     private CinemachineImpulseSource impulseSource;
+
+    [Header("Flash")]
+    public ImpactFlash impactFlash;
+    public SpriteRenderer spriteRenderer;
+    public Color flashColor;
+    public float flashDuration;
+
+    public GameObject retry;
 
     private void Start()
     {
+        retry.SetActive(false);
         prompt.gameObject.SetActive(false);
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
@@ -47,6 +57,9 @@ public class Health : MonoBehaviour
 
         CameraShakeManager.instance.CameraShake(impulseSource);
         SoundFX.Play("Hit");
+
+        impactFlash.Flash(spriteRenderer, flashDuration, flashColor, 0.1f, ImpactFlash.FlashType.Damage);
+
 
         if (stats != null && stats.isInvulnerable)
         {
@@ -76,6 +89,9 @@ public class Health : MonoBehaviour
         currentHealth += healAmount;
         if (currentHealth > maxHealth) currentHealth = maxHealth;
 
+        impactFlash.Flash(spriteRenderer, flashDuration, flashColor, 0.1f, ImpactFlash.FlashType.Heal);
+        SoundFX.Play("Heal");
+
         DOTween.To(() => previousHealth, x =>
         {
             healthBar.SetHealth(x);
@@ -98,5 +114,14 @@ public class Health : MonoBehaviour
             gameObject.SetActive(false);
             healthBar.gameObject.SetActive(false);
         });
+
+        if (isPlayer)
+        {
+            retry.gameObject.SetActive(true);
+            prompt.gameObject.SetActive(false);
+        } else
+        {
+            start.LoadNextScene();
+        }
     }
 }

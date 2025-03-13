@@ -5,13 +5,15 @@ using UnityEngine.Rendering.Universal;
 
 public class ComputerPopUp : MonoBehaviour
 {
-    [SerializeField] public Light2D computerLight;
-    [SerializeField] public Collider2D lightTrigger;
-    [SerializeField] public Collider2D popupTrigger;
-    [SerializeField] public Canvas canvas;
+    public Light2D computerLight;
+    public Collider2D lightTrigger;
+    public Collider2D popupTrigger;
+    public Canvas canvas;
 
-    [SerializeField] public LevelLoader start;
+    public LevelLoader start;
+
     private bool isPlayerInside = false;
+    private bool soundPlayed = false;
 
     void Start()
     {
@@ -30,13 +32,13 @@ public class ComputerPopUp : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        LevelLoader start = FindObjectOfType<LevelLoader>();
-
         if (collision.CompareTag("Player"))
         {
-            if(collision.IsTouching(lightTrigger))
+            if (collision.IsTouching(lightTrigger) && !soundPlayed)
             {
                 computerLight.gameObject.SetActive(true);
+                SoundFX.Play("Ping");
+                soundPlayed = true;
             }
 
             if (collision.IsTouching(popupTrigger))
@@ -44,7 +46,6 @@ public class ComputerPopUp : MonoBehaviour
                 canvas.gameObject.SetActive(true);
                 isPlayerInside = true;
             }
-
         }
     }
 
@@ -56,7 +57,6 @@ public class ComputerPopUp : MonoBehaviour
             {
                 canvas.gameObject.SetActive(false);
             }
-
         }
     }
 }

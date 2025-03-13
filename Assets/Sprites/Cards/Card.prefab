@@ -230,7 +230,7 @@ MonoBehaviour:
   m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 5
+  m_fontSizeMin: 12
   m_fontSizeMax: 20
   m_fontStyle: 0
   m_HorizontalAlignment: 1
@@ -424,8 +424,6 @@ MonoBehaviour:
   nameText: {fileID: 1473181619123789318}
   descText: {fileID: 7168951887016421600}
   bandwidth: {fileID: 5794340096039775613}
-  attackText: {fileID: 0}
-  defenseText: {fileID: 0}
 --- !u!114 &5669323835315283400
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -454,9 +452,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81330fb7762dc624a8ff99c8d8734b21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvasGroup: {fileID: 6028073387063622203}
   isDragging: 0
-  playArea: {fileID: 0}
+  graveyard: {fileID: 0}
 --- !u!1 &4102334538103660192
 GameObject:
   m_ObjectHideFlags: 0
