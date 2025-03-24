@@ -27,6 +27,7 @@ public class ComputerPopUp : MonoBehaviour
         if (isPlayerInside && Input.GetKeyDown("space"))
         {
             start.LoadNextScene();
+            SoundFX.Play("ComputerOpen");
         }
     }
 
