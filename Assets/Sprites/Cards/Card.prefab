@@ -436,9 +436,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b328edd03e4763f46a0b877711b478dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale: 1
-  finalScale: 1.2
+  scale: 2
   transitionSpeed: 0.3
+  initialScale: 1
   originalLocalPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &3978698664809518667
 MonoBehaviour:
