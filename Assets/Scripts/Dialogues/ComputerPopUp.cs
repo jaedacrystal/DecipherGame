@@ -8,7 +8,7 @@ public class ComputerPopUp : MonoBehaviour
     public Light2D computerLight;
     public Collider2D lightTrigger;
     public Collider2D popupTrigger;
-    public Canvas canvas;
+    public GameObject canvas;
 
     public LevelLoader start;
 
