@@ -22,10 +22,11 @@ public class PlayerMovement : MonoBehaviour
     {
         body.velocity = moveInput * moveSpeed;
 
-        if(body.velocity.magnitude > 0 && !playingFootsteps)
+        if (body.velocity.magnitude > 0 && !playingFootsteps)
         {
             StartFootsteps();
-        } else if(body.velocity.magnitude == 0)
+        }
+        else if (body.velocity.magnitude == 0)
         {
             StopFootsteps();
         }
@@ -35,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
     {
         animator.SetBool("isWalking", true);
 
-        if(context.canceled)
+        if (context.canceled)
         {
             animator.SetBool("isWalking", false);
             animator.SetFloat("LastInputX", moveInput.x);
@@ -51,7 +52,7 @@ public class PlayerMovement : MonoBehaviour
     {
         playingFootsteps = true;
         InvokeRepeating(nameof(PlayFootsteps), 0f, footstepSpeed);
-        
+
     }
 
     void StopFootsteps()
@@ -64,4 +65,11 @@ public class PlayerMovement : MonoBehaviour
     {
         SoundFX.Play("Footsteps", true);
     }
-}   
+}
+
+
+
+
+
+
+
